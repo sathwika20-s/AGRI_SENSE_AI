@@ -1,0 +1,29 @@
+pip install pyserial
+import serial
+import time
+
+try:
+    # Replace 'COM3' with the actual serial port of your Arduino
+    # On Linux/macOS, it might be something like '/dev/ttyACM0' or '/dev/ttyUSB0'
+    arduino = serial.Serial('COM3', 9600)
+    time.sleep(2)  # Give the Arduino time to initialize
+
+    while True:
+        data_to_send = input("Enter data to send to Arduino: ")
+        data_to_send += '\n'  # Add a newline character as a common end marker
+        arduino.write(data_to_send.encode())
+        time.sleep(0.1)  # Small delay
+
+        if data_to_send.strip() == 'quit':
+            break
+
+    arduino.close()
+    print("Serial connection closed.")
+
+except serial.SerialException as e:
+    print(f"Error opening serial port: {e}")
+    print("Please ensure the Arduino is connected and the serial port is correct.")
+except KeyboardInterrupt:
+    if 'arduino' in locals() and arduino.is_open:
+        arduino.close()
+        print("\nSerial connection closed due to keyboard interrupt.")
