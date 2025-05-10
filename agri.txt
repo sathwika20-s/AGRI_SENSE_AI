@@ -1,0 +1,51 @@
+pip install flask pandas plotly
+
+from flask import Flask, render_template
+import plotly.express as px
+import plotly.utils
+import json
+import pandas as pd
+import random
+from datetime import datetime, timedelta
+
+app = Flask(__name__)
+
+def generate_sample_data():
+    dates = [(datetime.now() - timedelta(days=x)).strftime('%Y-%m-%d') for x in range(7)]
+    return {
+        'dates': dates,
+        'soil_moisture': [random.uniform(20, 80) for _ in range(7)],
+        'water_capacity': [random.uniform(40, 90) for _ in range(7)]
+    }
+
+@app.route('/')
+def dashboard():
+    # Generate sample data (replace this with your actual sensor data)
+    data = generate_sample_data()
+    
+    # Create soil moisture graph
+    df_moisture = pd.DataFrame({
+        'Date': data['dates'],
+        'Soil Moisture (%)': data['soil_moisture']
+    })
+    fig_moisture = px.line(df_moisture, x='Date', y='Soil Moisture (%)', 
+                          title='Soil Moisture Trends')
+    moisture_graph = json.dumps(fig_moisture, cls=plotly.utils.PlotlyJSONEncoder)
+    
+    # Create water capacity graph
+    df_water = pd.DataFrame({
+        'Date': data['dates'],
+        'Water Capacity (%)': data['water_capacity']
+    })
+    fig_water = px.line(df_water, x='Date', y='Water Capacity (%)', 
+                        title='Water Capacity Trends')
+    water_graph = json.dumps(fig_water, cls=plotly.utils.PlotlyJSONEncoder)
+    
+    return render_template('dashboard.html', 
+                         moisture_graph=moisture_graph,
+                         water_graph=water_graph,
+                         current_moisture=round(data['soil_moisture'][-1], 1),
+                         current_water=round(data['water_capacity'][-1], 1))
+
+if __name__ == '__main__':
+    app.run(debug=True)
