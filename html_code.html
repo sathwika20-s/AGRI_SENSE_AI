@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agri Sense AI Dashboard</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .data-card {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .data-item {
+            margin-bottom: 10px;
+        }
+        .data-item strong {
+            color: #555;
+        }
+        .analysis-card {
+            background-color: #e9f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .prediction-card {
+            background-color: #f0f8ff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        #live-feed {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        #live-feed h2 {
+            border-bottom: 1px solid #eee;
+        }
+        .feed-item {
+            padding: 8px 0;
+            border-bottom: 1px dashed #ddd;
+        }
+        .feed-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Agri Sense AI Dashboard</h1>
+
+    <div class="dashboard-container">
+        <div class="data-card">
+            <h2>Sensor Data</h2>
+            <div class="data-item"><strong>Temperature:</strong> <span id="temperature">28°C</span></div>
+            <div class="data-item"><strong>Humidity:</strong> <span id="humidity">75%</span></div>
+            <div class="data-item"><strong>Soil Moisture:</strong> <span id="soil-moisture">60%</span></div>
+            <div class="data-item"><strong>Light Intensity:</strong> <span id="light-intensity">800 lux</span></div>
+        </div>
+
+        <div class="analysis-card">
+            <h2>Plant Health Analysis</h2>
+            <div class="data-item"><strong>Detected Condition:</strong> <span id="plant-condition">Healthy</span></div>
+            <div class="data-item"><strong>Confidence Level:</strong> <span id="condition-confidence">95%</span></div>
+            <button onclick="analyzeImage()">Analyze New Image</button>
+        </div>
+
+        <div class="prediction-card">
+            <h2>Yield Prediction</h2>
+            <div class="data-item"><strong>Predicted Yield (Next Harvest):</strong> <span id="predicted-yield">1200 kg/hectare</span></div>
+            <div class="data-item"><strong>Prediction Confidence:</strong> <span id="yield-confidence">88%</span></div>
+        </div>
+
+        <div class="data-card">
+            <h2>Environmental Insights</h2>
+            <div class="data-item"><strong>Weather Forecast (Tomorrow):</strong> <span id="weather-forecast">Sunny, 30°C</span></div>
+            <div class="data-item"><strong>Pest Risk Assessment:</strong> <span id="pest-risk">Low</span></div>
+        </div>
+    </div>
+
+    <div id="live-feed">
+        <h2>Live Updates</h2>
+        <div id="feed-container">
+            <div class="feed-item">Sensor data updated at 12:30 PM.</div>
+            <div class="feed-item">Plant health check initiated.</div>
+        </div>
+    </div>
+
+    <script>
+        // Simulate fetching sensor data (in a real application, this would come from a backend)
+        function updateSensorData() {
+            document.getElementById('temperature').textContent = Math.floor(Math.random() * 10) + 25 + "°C";
+            document.getElementById('humidity').textContent = Math.floor(Math.random() * 20) + 60 + "%";
+            document.getElementById('soil-moisture').textContent = Math.floor(Math.random() * 30) + 40 + "%";
+            document.getElementById('light-intensity').textContent = Math.floor(Math.random() * 500) + 500 + " lux";
+        }
+
+        // Simulate plant health analysis (in a real application, this would involve sending an image to the backend/AI)
+        function analyzeImage() {
+            alert("Initiating plant health analysis...");
+            // In a real
