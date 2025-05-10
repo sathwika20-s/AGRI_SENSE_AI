@@ -1,0 +1,20 @@
+import serial
+import time
+
+try:
+    # Replace 'COM3' with the actual serial port of your Arduino
+    arduino = serial.Serial('COM3', 9600)
+    time.sleep(2)  # Give the Arduino time to initialize
+
+    while True:
+        if arduino.in_waiting > 0:
+            received_data = arduino.readline().decode('utf-8').strip()
+            print(f"Received from Arduino: {received_data}")
+
+except serial.SerialException as e:
+    print(f"Error opening serial port: {e}")
+    print("Please ensure the Arduino is connected and the serial port is correct.")
+except KeyboardInterrupt:
+    if 'arduino' in locals() and arduino.is_open:
+        arduino.close()
+        print("\nSerial connection closed due to keyboard interrupt.")
